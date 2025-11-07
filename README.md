@@ -1,8 +1,9 @@
 # ReNE
-the path finding system with satellite map cognition AI
+목표: 기존 네비게이션 기술에서 단기간 공사나 최근 발생한 도로 상황 변경에 대해서 반영이 느려 엉뚱한 길로 사용자를 인도하는 현상을 방지하기 위해 DeepLab V3+ 기반의 실시간 네비게이션 제공
 
-it is the seoruju's high school Research and Education project
-
-this is a portfolio
-
-Let's make new things!!
+- 전처리: DeepLab V3+에서 이용할 수 있도록 이미지를 256*256으로 잘라냄
+    -> 용량이 커지고 학습 능률이 현저히 떨어져 이미지를 다운스케일링 한 이후 256*256으로 잘라냄
+- DeepLab V3+: 전처리를 거친 이미지에서 도로를 추출해 0과 1로 구성되는 행렬 반환
+  
+- 알고리즘: 길찾기 알고리즘(DFS, BFS, A*, hill climbing)을 사용해 길을 찾고 matplotlib을 사용해 경로 시각화
+    -> 다른 알고리즘들의 효율이 낮았기 때문에 A*알고리즘만 사용하는 것으로 변경
