@@ -3,6 +3,11 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import heapq
 
+# 휴리스틱 함수(추후 변경 예정)
+def heuristic(a, b):
+    return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+
 # --- A* 함수 ---
 def a_star(grid, start, end):
     height, width = grid.shape
