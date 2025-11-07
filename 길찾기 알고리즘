@@ -1,0 +1,63 @@
+  import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import heapq
+
+# --- A* 함수 ---
+def a_star(grid, start, end):
+    height, width = grid.shape
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)] # 상하좌우
+
+    g_cost = 0
+    h_cost = heuristic(start, end)
+    f_cost = g_cost + h_cost
+
+    priority_queue = [(f_cost, g_cost, start, [start])]
+
+    # 방문 기록
+    visited_set = {start}
+
+    visited_order_for_viz = []
+
+    while priority_queue:
+        # 비용이 가장 낮은 노드를 꺼냄
+        f, g, current_node, path = heapq.heappop(priority_queue)
+
+        if current_node != start and current_node != end:
+            visited_order_for_viz.append(current_node)
+
+        # 목표 도달
+        if current_node == end:
+            return visited_order_for_viz, path
+
+        # 4방향 탐색
+        for dr, dc in directions:
+            next_row, next_col = current_node[0] + dr, current_node[1] + dc
+            next_node = (next_row, next_col)
+
+            if 0 <= next_row < height and 0 <= next_col < width:
+                # 장애물이 아니고, 방문하지 않은 곳
+                if grid[next_row, next_col] == 1 and next_node not in visited_set:
+                    visited_set.add(next_node)
+
+                    new_g = g + 1 # 한 칸 이동 비용은 1
+                    new_h = heuristic(next_node, end)
+                    new_f = new_g + new_h
+
+                    heapq.heappush(priority_queue, (new_f, new_g, next_node, path + [next_node]))
+
+    # 경로를 찾지 못함
+    return visited_order_for_viz, []
+
+
+# --- A* 알고리즘 실행 ---
+visited, path = a_star(grid, scaled_start_node, scaled_end_node)
+
+if not path:
+    print("경로를 찾지 못했습니다!")
+else:
+    print(f"총 탐색한 노드 수: {len(visited)}")
+    print(f"최종 경로 길이: {len(path)}")
+
+# 시각화
+get_viz_grid(grid, "A* Pathfinding Visualization")
