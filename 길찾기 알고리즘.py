@@ -8,7 +8,7 @@ def heuristic(a, b):
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 
-# --- A* 함수 ---
+# A* 알고리즘
 def a_star(grid, start, end):
     height, width = grid.shape
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1)] # 상하좌우
@@ -55,7 +55,7 @@ def a_star(grid, start, end):
     return visited_order_for_viz, []
 
 
-# --- A* 알고리즘 실행 ---
+# A* 알고리즘 실행
 visited, path = a_star(grid, scaled_start_node, scaled_end_node)
 
 if not path:
